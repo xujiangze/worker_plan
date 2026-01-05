@@ -1,0 +1,18 @@
+# 服务器配置
+server:
+  port: 8080
+  mode: debug  # debug, release, test
+
+# 数据库配置
+database:
+  host: localhost
+  port: 5432
+  user: worker_plan
+  password: password123456
+  dbname: worker_plan
+  sslmode: disable
+
+# 日志配置
+log:
+  level: info  # debug, info, warn, error
+  format: console  # json, console

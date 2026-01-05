@@ -37,6 +37,7 @@ func main() {
 	middleware.InfoLog("Starting worker plan server...")
 
 	// 初始化数据库
+	fmt.Println(cfg.Database.GetDSN())
 	dbConfig := database.DefaultConfig(cfg.Database.GetDSN())
 	if err := database.Init(dbConfig); err != nil {
 		middleware.ErrorLog("Failed to init database")
