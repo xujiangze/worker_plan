@@ -124,6 +124,26 @@ export const usePlanStore = defineStore('plan', () => {
     }
   }
 
+  const updateStatus = async (id: number, status: string) => {
+    loading.value = true
+    try {
+      const updatedPlan = await planApi.updatePlanStatus(id, status)
+      const index = plans.value.findIndex((p) => p.id === id)
+      if (index !== -1) {
+        plans.value[index] = updatedPlan
+      }
+      if (currentPlan.value?.id === id) {
+        currentPlan.value = updatedPlan
+      }
+      return updatedPlan
+    } catch (error) {
+      console.error('更新状态失败:', error)
+      throw error
+    } finally {
+      loading.value = false
+    }
+  }
+
   const setFilters = (newFilters: PaginationParams) => {
     filters.value = { ...newFilters }
     currentPage.value = 1
@@ -160,6 +180,7 @@ export const usePlanStore = defineStore('plan', () => {
     updatePlan,
     deletePlan,
     updateProgress,
+    updateStatus,
     setFilters,
     setPage,
     setPageSize,

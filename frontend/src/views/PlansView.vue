@@ -95,8 +95,49 @@
               </div>
             </div>
 
+            <!-- 状态更新 -->
+            <div class="plan-status-update">
+              <span class="label">状态:</span>
+              <el-select
+                v-model="plan.status"
+                size="small"
+                style="width: 120px"
+                @change="(value) => handleStatusChange(plan.id, value)"
+              >
+                <el-option label="待办" :value="PlanStatus.Todo" />
+                <el-option label="进行中" :value="PlanStatus.InProgress" />
+                <el-option label="已完成" :value="PlanStatus.Done" />
+                <el-option label="已取消" :value="PlanStatus.Cancelled" />
+              </el-select>
+            </div>
+
+            <!-- 进度更新 -->
+            <div class="plan-progress-update">
+              <span class="label">进度:</span>
+              <el-input-number
+                v-model="plan.progress"
+                :min="0"
+                :max="100"
+                :step="5"
+                size="small"
+                style="width: 120px"
+                @change="(value) => handleProgressChange(plan.id, value)"
+              />
+              <span class="unit">%</span>
+            </div>
+
             <div class="plan-progress">
-              <el-progress :percentage="plan.progress" :stroke-width="8" />
+              <ProgressBar :percentage="plan.progress" />
+            </div>
+
+            <!-- 到期提醒 -->
+            <div v-if="plan.due_date" class="plan-due-alert">
+              <el-tag v-if="isOverdue(plan.due_date)" type="danger" size="small">
+                已过期
+              </el-tag>
+              <el-tag v-else-if="isDueSoon(plan.due_date)" type="warning" size="small">
+                即将到期
+              </el-tag>
             </div>
           </div>
         </el-card>
@@ -136,6 +177,7 @@ import { PlanStatus, PlanPriority } from '@/types/api'
 import StatusBadge from '@/components/StatusBadge.vue'
 import PriorityBadge from '@/components/PriorityBadge.vue'
 import Loading from '@/components/Loading.vue'
+import ProgressBar from '@/components/ProgressBar.vue'
 import PlanForm from './PlanForm.vue'
 import type { Plan } from '@/types/api'
 
@@ -295,6 +337,28 @@ const handleFormSuccess = () => {
   }
 }
 
+const handleStatusChange = async (id: number, status: string) => {
+  try {
+    await planStore.updateStatus(id, status)
+    uiStore.showSuccess('状态更新成功')
+  } catch (error) {
+    uiStore.showError('状态更新失败')
+    // 更新失败时,重新获取数据以恢复原始状态
+    planStore.fetchPlans()
+  }
+}
+
+const handleProgressChange = async (id: number, progress: number) => {
+  try {
+    await planStore.updateProgress(id, progress)
+    uiStore.showSuccess('进度更新成功')
+  } catch (error) {
+    uiStore.showError('进度更新失败')
+    // 更新失败时,重新获取数据以恢复原始状态
+    planStore.fetchPlans()
+  }
+}
+
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   return date.toLocaleString('zh-CN', {
@@ -304,6 +368,22 @@ const formatDate = (dateString: string) => {
     hour: '2-digit',
     minute: '2-digit',
   })
+}
+
+// 判断是否已过期
+const isOverdue = (dueDate: string) => {
+  const now = new Date()
+  const due = new Date(dueDate)
+  return due < now
+}
+
+// 判断是否即将到期(7天内)
+const isDueSoon = (dueDate: string) => {
+  const now = new Date()
+  const due = new Date(dueDate)
+  const diffTime = due.getTime() - now.getTime()
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  return diffDays > 0 && diffDays <= 7
 }
 </script>
 
@@ -402,6 +482,30 @@ const formatDate = (dateString: string) => {
 }
 
 .plan-progress {
+  margin-top: 10px;
+}
+
+.plan-status-update,
+.plan-progress-update {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.plan-status-update .label,
+.plan-progress-update .label {
+  font-size: 13px;
+  color: #606266;
+  min-width: 40px;
+}
+
+.plan-progress-update .unit {
+  font-size: 13px;
+  color: #909399;
+}
+
+.plan-due-alert {
   margin-top: 10px;
 }
 

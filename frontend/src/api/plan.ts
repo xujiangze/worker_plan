@@ -36,3 +36,8 @@ export const deletePlan = (id: number): Promise<void> => {
 export const updatePlanProgress = (id: number, progress: number): Promise<Plan> => {
   return request.patch(`/plans/${id}/progress`, { progress })
 }
+
+// 更新计划状态
+export const updatePlanStatus = (id: number, status: string): Promise<Plan> => {
+  return request.patch(`/plans/${id}/status`, { status })
+}
