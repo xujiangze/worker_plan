@@ -16,6 +16,16 @@ const routes: RouteRecordRaw[] = [
         name: 'Plans',
         component: () => import('@/views/PlansView.vue'),
       },
+      {
+        path: 'plans/create',
+        name: 'PlanCreate',
+        component: () => import('@/views/PlansView.vue'),
+      },
+      {
+        path: 'plans/:id/edit',
+        name: 'PlanEdit',
+        component: () => import('@/views/PlansView.vue'),
+      },
     ],
   },
 ]
