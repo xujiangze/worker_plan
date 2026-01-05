@@ -111,6 +111,14 @@ const formRules: FormRules = {
   ],
 }
 
+const resetForm = () => {
+  formData.title = ''
+  formData.description = ''
+  formData.priority = PlanPriority.Medium
+  formData.due_date = ''
+  formRef.value?.clearValidate()
+}
+
 // 监听 plan 变化,预填充表单
 watch(
   () => props.plan,
@@ -126,14 +134,6 @@ watch(
   },
   { immediate: true }
 )
-
-const resetForm = () => {
-  formData.title = ''
-  formData.description = ''
-  formData.priority = PlanPriority.Medium
-  formData.due_date = ''
-  formRef.value?.clearValidate()
-}
 
 const handleClose = () => {
   visible.value = false
