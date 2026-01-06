@@ -52,7 +52,7 @@
       <Loading v-if="loading" loading text="加载中..." />
 
       <!-- 空状态 -->
-      <el-empty v-else-if="!plans || plans.value?.length === 0" description="暂无计划数据" />
+      <el-empty v-else-if="!plans || plans.length === 0" description="暂无计划数据" />
 
       <!-- 计划卡片列表 -->
       <div v-else class="plan-cards">
@@ -102,7 +102,7 @@
                 v-model="plan.status"
                 size="small"
                 style="width: 120px"
-                @change="(value) => handleStatusChange(plan.id, value)"
+                @change="(value: PlanStatus) => handleStatusChange(plan.id, value)"
               >
                 <el-option label="待办" :value="PlanStatus.Todo" />
                 <el-option label="进行中" :value="PlanStatus.InProgress" />
@@ -121,7 +121,7 @@
                 :step="5"
                 size="small"
                 style="width: 120px"
-                @change="(value) => handleProgressChange(plan.id, value)"
+                @change="(value: number) => handleProgressChange(plan.id, value)"
               />
               <span class="unit">%</span>
             </div>

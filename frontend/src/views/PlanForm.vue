@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch, computed } from 'vue'
-import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { type FormInstance, type FormRules } from 'element-plus'
 import { PlanPriority } from '@/types/api'
 import { usePlanStore } from '@/stores/plan'
 import { useUiStore } from '@/stores/ui'

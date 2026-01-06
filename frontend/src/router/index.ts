@@ -9,7 +9,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        redirect: '/plans',
+        name: 'Home',
+        component: () => import('@/views/HomeView.vue'),
       },
       {
         path: 'plans',
@@ -25,6 +26,21 @@ const routes: RouteRecordRaw[] = [
         path: 'plans/:id/edit',
         name: 'PlanEdit',
         component: () => import('@/views/PlansView.vue'),
+      },
+      {
+        path: 'statistics',
+        name: 'Statistics',
+        component: () => import('@/views/StatisticsView.vue'),
+      },
+      {
+        path: 'progress',
+        name: 'Progress',
+        component: () => import('@/views/ProgressView.vue'),
+      },
+      {
+        path: 'history',
+        name: 'History',
+        component: () => import('@/views/HistoryView.vue'),
       },
     ],
   },
