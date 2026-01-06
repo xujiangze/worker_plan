@@ -397,10 +397,16 @@
 | description | string | 描述 | 否 |
 | priority | string | 优先级(High, Medium, Low) | 是 |
 | status | string | 状态(Todo, InProgress, Done, Cancelled) | 是 |
-| due_date | timestamp | 截止日期 | 否 |
+| due_date | string | 截止日期(ISO 8601 格式,可选) | 否 |
 | progress | int | 进度(0-100) | 是 |
-| created_at | timestamp | 创建时间 | - |
-| updated_at | timestamp | 更新时间 | - |
+| created_at | string | 创建时间(ISO 8601 格式) | - |
+| updated_at | string | 更新时间(ISO 8601 格式) | - |
+
+**时间字段格式说明**:
+- 所有时间字段使用 ISO 8601 格式字符串
+- 示例: `"2024-12-31T23:59:59+08:00"` 或 `"2024-12-31T23:59:59Z"`
+- `due_date` 字段为可选,可以为 `null`
+- 前端应使用 `new Date(dateString)` 解析时间字符串
 
 ### PlanHistory
 | 字段 | 类型 | 说明 | 必填 |

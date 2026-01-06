@@ -52,7 +52,7 @@
       <Loading v-if="loading" loading text="加载中..." />
 
       <!-- 空状态 -->
-      <el-empty v-else-if="plans.length === 0" description="暂无计划数据" />
+      <el-empty v-else-if="!plans || plans.value?.length === 0" description="暂无计划数据" />
 
       <!-- 计划卡片列表 -->
       <div v-else class="plan-cards">
@@ -180,12 +180,13 @@ import Loading from '@/components/Loading.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
 import PlanForm from './PlanForm.vue'
 import type { Plan } from '@/types/api'
+import { storeToRefs } from 'pinia'
 
 const route = useRoute()
 const planStore = usePlanStore()
 const uiStore = useUiStore()
 
-const { plans, loading, total, currentPage, pageSize } = planStore
+const { plans, loading, total, currentPage, pageSize } = storeToRefs(planStore)
 
 // 筛选和排序状态
 const filterStatus = ref<PlanStatus | ''>('')
@@ -198,7 +199,7 @@ const currentEditPlan = ref<Plan | null>(null)
 
 // 筛选后的计划列表
 const filteredPlans = computed(() => {
-  let result = [...plans]
+  let result = plans.value ? [...plans.value] : []
 
   if (filterStatus.value) {
     result = result.filter((plan) => plan.status === filterStatus.value)

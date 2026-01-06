@@ -26,10 +26,15 @@ export const usePlanStore = defineStore('plan', () => {
         ...filters.value,
         ...params,
       })
+      console.log('fetchPlans - 原始响应:', response)
+      console.log('fetchPlans - items:', response.items)
+      console.log('fetchPlans - items 类型:', typeof response.items)
+      console.log('fetchPlans - items 长度:', response.items?.length)
       plans.value = response.items
       total.value = response.total
       currentPage.value = response.page
       pageSize.value = response.page_size
+      console.log('fetchPlans - plans.value:', plans.value)
     } catch (error) {
       console.error('获取计划列表失败:', error)
       throw error
