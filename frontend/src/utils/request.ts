@@ -35,8 +35,10 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    // 统一处理响应数据
-    return response.data
+    // 统一处理响应数据,提取 data 字段
+    // 后端返回格式: {code: 0, message: "success", data: {...}}
+    // 前端只需要 data 字段的内容
+    return response.data.data
   },
   (error: AxiosError) => {
     // 统一错误处理

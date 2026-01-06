@@ -70,10 +70,11 @@ func (pc *PlanController) GetPlans(c *gin.Context) {
 	}
 
 	SuccessResponse(c, gin.H{
-		"total":     total,
-		"page":      page,
-		"page_size": pageSize,
-		"data":      plans,
+		"items":       plans,
+		"total":       total,
+		"page":        page,
+		"page_size":   pageSize,
+		"total_pages": (total + int64(pageSize) - 1) / int64(pageSize),
 	})
 }
 
