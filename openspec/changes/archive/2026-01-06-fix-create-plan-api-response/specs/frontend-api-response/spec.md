@@ -1,6 +1,6 @@
 # Frontend API Response Handling
 
-## MODIFIED Requirements
+## ADDED Requirements
 
 ### Requirement: Frontend API response interceptor MUST extract data field from backend response
 
