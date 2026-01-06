@@ -68,6 +68,7 @@
               </div>
               <div class="plan-actions">
                 <el-button size="small" @click="handleEdit(plan)">编辑</el-button>
+                <el-button size="small" @click="handleViewHistory(plan)">查看历史</el-button>
                 <el-button size="small" type="danger" @click="handleDelete(plan)">
                   删除
                 </el-button>
@@ -282,6 +283,10 @@ const handleCreate = () => {
 const handleEdit = (plan: Plan) => {
   currentEditPlan.value = plan
   formVisible.value = true
+}
+
+const handleViewHistory = (plan: Plan) => {
+  router.push(`/history/${plan.id}`)
 }
 
 const handleDelete = async (plan: Plan) => {

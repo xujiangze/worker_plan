@@ -39,6 +39,11 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'history',
+        name: 'HistoryList',
+        component: () => import('@/views/HistoryListView.vue'),
+      },
+      {
+        path: 'history/:planId',
         name: 'History',
         component: () => import('@/views/HistoryView.vue'),
       },

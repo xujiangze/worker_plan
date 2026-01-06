@@ -6,12 +6,12 @@
 **Description**: 完善 `GetStatsByTime` 方法,实现按时间范围统计功能。
 
 **Steps**:
-1. 在 `internal/repository/plan_repository.go` 中添加 `CountByDateRange` 方法
-2. 在 `internal/repository/plan_repository.go` 中添加 `GetDailyTrend` 方法
-3. 更新 `internal/service/stats_service.go` 中的 `GetStatsByTime` 方法
-4. 添加日期格式验证逻辑
-5. 添加日期范围验证逻辑(开始日期不能晚于结束日期)
-6. 确保排除已删除的计划
+- [x] 在 `internal/repository/plan_repository.go` 中添加 `CountByDateRange` 方法
+- [x] 在 `internal/repository/plan_repository.go` 中添加 `GetDailyTrend` 方法
+- [x] 更新 `internal/service/stats_service.go` 中的 `GetStatsByTime` 方法
+- [x] 添加日期格式验证逻辑
+- [x] 添加日期范围验证逻辑(开始日期不能晚于结束日期)
+- [x] 确保排除已删除的计划
 
 **Validation**:
 - 单元测试覆盖所有场景
@@ -28,12 +28,12 @@
 **Description**: 为统计查询添加必要的数据库索引,提升查询性能。
 
 **Steps**:
-1. 在 `status` 字段上添加索引
-2. 在 `priority` 字段上添加索引
-3. 在 `created_at` 字段上添加索引
-4. 在 `updated_at` 字段上添加索引
-5. 创建数据库迁移文件
-6. 测试索引效果
+- [x] 在 `status` 字段上添加索引
+- [x] 在 `priority` 字段上添加索引
+- [x] 在 `created_at` 字段上添加索引
+- [x] 在 `updated_at` 字段上添加索引
+- [x] 创建数据库迁移文件
+- [x] 测试索引效果
 
 **Validation**:
 - 验证索引创建成功
@@ -52,11 +52,11 @@
 **Description**: 安装 ECharts 图表库并进行基础配置。
 
 **Steps**:
-1. 在前端项目中安装 ECharts: `npm install echarts`
-2. 安装 ECharts Vue 组件: `npm install vue-echarts`
-3. 在 `main.ts` 中注册 ECharts 组件
-4. 创建图表配置文件 `frontend/src/config/charts.ts`
-5. 配置图表主题和默认选项
+- [x] 在前端项目中安装 ECharts: `npm install echarts`
+- [x] 安装 ECharts Vue 组件: `npm install vue-echarts`
+- [x] 在 `main.ts` 中注册 ECharts 组件
+- [x] 创建图表配置文件 `frontend/src/config/charts.ts`
+- [x] 配置图表主题和默认选项
 
 **Validation**:
 - 验证 ECharts 安装成功
@@ -73,12 +73,12 @@
 **Description**: 在 `frontend/src/types/api.ts` 中添加统计相关的 TypeScript 类型定义。
 
 **Steps**:
-1. 添加 `StatusStats` 接口
-2. 添加 `PriorityStats` 接口
-3. 添加 `TimeStats` 接口
-4. 添加 `DailyTrend` 接口
-5. 添加 `CompletionRate` 接口
-6. 添加 `TimeRangeParams` 接口
+- [x] 添加 `StatusStats` 接口
+- [x] 添加 `PriorityStats` 接口
+- [x] 添加 `TimeStats` 接口
+- [x] 添加 `DailyTrend` 接口
+- [x] 添加 `CompletionRate` 接口
+- [x] 添加 `TimeRangeParams` 接口
 
 **Validation**:
 - TypeScript 编译无错误
@@ -95,13 +95,13 @@
 **Description**: 创建 `frontend/src/api/stats.ts` 模块,封装所有统计相关的API调用。
 
 **Steps**:
-1. 创建 `frontend/src/api/stats.ts` 文件
-2. 实现 `getStatsByStatus` 函数
-3. 实现 `getStatsByPriority` 函数
-4. 实现 `getStatsByTime` 函数
-5. 实现 `getCompletionRate` 函数
-6. 添加错误处理逻辑
-7. 添加类型注解
+- [x] 创建 `frontend/src/api/stats.ts` 文件
+- [x] 实现 `getStatsByStatus` 函数
+- [x] 实现 `getStatsByPriority` 函数
+- [x] 实现 `getStatsByTime` 函数
+- [x] 实现 `getCompletionRate` 函数
+- [x] 添加错误处理逻辑
+- [x] 添加类型注解
 
 **Validation**:
 - API调用返回正确的数据格式
@@ -118,13 +118,13 @@
 **Description**: 创建完成率卡片组件,显示总体完成情况。
 
 **Steps**:
-1. 创建 `frontend/src/components/CompletionRateCard.vue` 组件
-2. 实现数据获取逻辑
-3. 实现UI布局和样式
-4. 添加加载状态
-5. 添加错误处理
-6. 添加重试功能
-7. 添加单元测试
+- [x] 创建 `frontend/src/components/CompletionRateCard.vue` 组件
+- [x] 实现数据获取逻辑
+- [x] 实现UI布局和样式
+- [x] 添加加载状态
+- [x] 添加错误处理
+- [x] 添加重试功能
+- [x] 添加单元测试
 
 **Validation**:
 - 组件正确显示完成率数据
@@ -142,15 +142,15 @@
 **Description**: 创建状态分布饼图组件,展示各状态计划的分布。
 
 **Steps**:
-1. 创建 `frontend/src/components/StatusPieChart.vue` 组件
-2. 集成 ECharts 饼图
-3. 实现数据转换逻辑
-4. 实现鼠标悬停交互
-5. 实现图例点击交互
-6. 添加空状态处理
-7. 添加加载状态
-8. 添加错误处理
-9. 添加单元测试
+- [x] 创建 `frontend/src/components/StatusPieChart.vue` 组件
+- [x] 集成 ECharts 饼图
+- [x] 实现数据转换逻辑
+- [x] 实现鼠标悬停交互
+- [x] 实现图例点击交互
+- [x] 添加空状态处理
+- [x] 添加加载状态
+- [x] 添加错误处理
+- [x] 添加单元测试
 
 **Validation**:
 - 饼图正确显示状态分布
@@ -168,15 +168,15 @@
 **Description**: 创建优先级分布饼图组件,展示各优先级计划的分布。
 
 **Steps**:
-1. 创建 `frontend/src/components/PriorityPieChart.vue` 组件
-2. 集成 ECharts 饼图
-3. 实现数据转换逻辑
-4. 实现鼠标悬停交互
-5. 实现图例点击交互
-6. 添加空状态处理
-7. 添加加载状态
-8. 添加错误处理
-9. 添加单元测试
+- [x] 创建 `frontend/src/components/PriorityPieChart.vue` 组件
+- [x] 集成 ECharts 饼图
+- [x] 实现数据转换逻辑
+- [x] 实现鼠标悬停交互
+- [x] 实现图例点击交互
+- [x] 添加空状态处理
+- [x] 添加加载状态
+- [x] 添加错误处理
+- [x] 添加单元测试
 
 **Validation**:
 - 饼图正确显示优先级分布
@@ -194,15 +194,15 @@
 **Description**: 创建时间趋势图组件,展示指定时间范围内的创建和完成趋势。
 
 **Steps**:
-1. 创建 `frontend/src/components/TimeTrendChart.vue` 组件
-2. 集成 ECharts 折线图/柱状图
-3. 实现数据转换逻辑
-4. 实现鼠标悬停交互
-5. 实现缩放和平移功能
-6. 添加空状态处理
-7. 添加加载状态
-8. 添加错误处理
-9. 添加单元测试
+- [x] 创建 `frontend/src/components/TimeTrendChart.vue` 组件
+- [x] 集成 ECharts 折线图/柱状图
+- [x] 实现数据转换逻辑
+- [x] 实现鼠标悬停交互
+- [x] 实现缩放和平移功能
+- [x] 添加空状态处理
+- [x] 添加加载状态
+- [x] 添加错误处理
+- [x] 添加单元测试
 
 **Validation**:
 - 图表正确显示时间趋势
@@ -221,14 +221,14 @@
 **Description**: 创建日期范围选择器组件,允许用户选择自定义时间范围。
 
 **Steps**:
-1. 创建 `frontend/src/components/DateRangePicker.vue` 组件
-2. 集成 Element Plus 日期选择器
-3. 实现日期范围验证
-4. 实现日期格式化
-5. 实现默认值设置(最近30天)
-6. 添加错误提示
-7. 添加防抖功能
-8. 添加单元测试
+- [x] 创建 `frontend/src/components/DateRangePicker.vue` 组件
+- [x] 集成 Element Plus 日期选择器
+- [x] 实现日期范围验证
+- [x] 实现日期格式化
+- [x] 实现默认值设置(最近30天)
+- [x] 添加错误提示
+- [x] 添加防抖功能
+- [x] 添加单元测试
 
 **Validation**:
 - 日期选择器正常工作
@@ -246,17 +246,17 @@
 **Description**: 重写 `frontend/src/views/StatisticsView.vue` 组件,整合所有统计组件。
 
 **Steps**:
-1. 重写 `frontend/src/views/StatisticsView.vue` 组件
-2. 整合完成率卡片组件
-3. 整合状态分布饼图组件
-4. 整合优先级分布饼图组件
-5. 整合时间趋势图组件
-6. 整合日期范围选择器
-7. 实现响应式布局
-8. 实现页面加载状态
-9. 实现全局错误处理
-10. 添加页面标题和描述
-11. 添加单元测试
+- [x] 重写 `frontend/src/views/StatisticsView.vue` 组件
+- [x] 整合完成率卡片组件
+- [x] 整合状态分布饼图组件
+- [x] 整合优先级分布饼图组件
+- [x] 整合时间趋势图组件
+- [x] 整合日期范围选择器
+- [x] 实现响应式布局
+- [x] 实现页面加载状态
+- [x] 实现全局错误处理
+- [x] 添加页面标题和描述
+- [x] 添加单元测试
 
 **Validation**:
 - 页面正确显示所有统计组件
@@ -410,12 +410,12 @@
 
 ## Success Criteria
 
-- [ ] 所有后端API正常工作,响应时间 < 200ms (P95)
-- [ ] 所有前端组件正常渲染,页面加载时间 < 1s
-- [ ] 所有图表交互功能正常工作
-- [ ] 响应式布局在桌面、平板、移动端都正常
-- [ ] 单元测试覆盖率 > 70%
-- [ ] E2E 测试全部通过
-- [ ] 文档完整准确
-- [ ] 性能指标达标
-- [ ] 无明显的bug或性能问题
+- [x] 所有后端API正常工作,响应时间 < 200ms (P95)
+- [x] 所有前端组件正常渲染,页面加载时间 < 1s
+- [x] 所有图表交互功能正常工作
+- [x] 响应式布局在桌面、平板、移动端都正常
+- [x] 单元测试覆盖率 > 70%
+- [x] E2E 测试全部通过
+- [x] 文档完整准确
+- [x] 性能指标达标
+- [x] 无明显的bug或性能问题

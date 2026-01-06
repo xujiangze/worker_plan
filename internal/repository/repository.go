@@ -18,6 +18,8 @@ type PlanRepository interface {
 	Update(plan *model.Plan) error
 	Delete(id uint) error
 	Count(filters map[string]interface{}) (int64, error)
+	CountByDateRange(startDate, endDate string, status string) (int64, error)
+	GetDailyTrend(startDate, endDate string) ([]*DailyTrendItem, error)
 }
 
 // PlanHistoryRepository 计划历史仓储接口

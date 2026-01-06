@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"time"
 	"worker_plan/internal/repository"
 )
 
@@ -33,8 +34,17 @@ type PriorityStats struct {
 
 // TimeStats 时间统计
 type TimeStats struct {
-	Date  string `json:"date"`
-	Count int64  `json:"count"`
+	CreatedCount   int64             `json:"created_count"`
+	CompletedCount int64             `json:"completed_count"`
+	CompletionRate float64           `json:"completion_rate"`
+	DailyTrend     []*DailyTrendItem `json:"daily_trend"`
+}
+
+// DailyTrendItem 每日趋势项
+type DailyTrendItem struct {
+	Date      string `json:"date"`
+	Created   int64  `json:"created"`
+	Completed int64  `json:"completed"`
 }
 
 // CompletionRate 完成率
@@ -110,18 +120,69 @@ func (s *StatisticsService) GetStatsByPriority() ([]*PriorityStats, error) {
 	return stats, nil
 }
 
-// GetStatsByTime 按时间统计(简化版,按天统计)
-func (s *StatisticsService) GetStatsByTime(startDate, endDate string) ([]*TimeStats, error) {
-	// 这里简化处理,实际应该解析日期并使用 SQL 的 DATE_TRUNC 函数
-	// 由于 repository 层的限制,这里返回空数组
-	// 实际实现需要在 repository 层添加更复杂的查询方法
+// GetStatsByTime 按时间统计
+func (s *StatisticsService) GetStatsByTime(startDate, endDate string) (*TimeStats, error) {
+	// 验证日期格式
+	if startDate != "" {
+		if _, err := time.Parse("2006-01-02", startDate); err != nil {
+			return nil, fmt.Errorf("invalid start date format: %w", err)
+		}
+	}
+	if endDate != "" {
+		if _, err := time.Parse("2006-01-02", endDate); err != nil {
+			return nil, fmt.Errorf("invalid end date format: %w", err)
+		}
+	}
 
-	var stats []*TimeStats
+	// 验证日期范围
+	if startDate != "" && endDate != "" {
+		start, _ := time.Parse("2006-01-02", startDate)
+		end, _ := time.Parse("2006-01-02", endDate)
+		if start.After(end) {
+			return nil, fmt.Errorf("start date cannot be after end date")
+		}
+	}
 
-	// TODO: 实现按时间统计的逻辑
-	// 需要在 repository 层添加支持日期范围统计的方法
+	// 获取创建数量
+	createdCount, err := s.planRepo.CountByDateRange(startDate, endDate, "")
+	if err != nil {
+		return nil, fmt.Errorf("failed to get created count: %w", err)
+	}
 
-	return stats, nil
+	// 获取完成数量
+	completedCount, err := s.planRepo.CountByDateRange(startDate, endDate, "Done")
+	if err != nil {
+		return nil, fmt.Errorf("failed to get completed count: %w", err)
+	}
+
+	// 计算完成率
+	completionRate := 0.0
+	if createdCount > 0 {
+		completionRate = float64(completedCount) / float64(createdCount) * 100
+	}
+
+	// 获取每日趋势数据
+	dailyTrend, err := s.planRepo.GetDailyTrend(startDate, endDate)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get daily trend: %w", err)
+	}
+
+	// 转换为service层的DailyTrendItem
+	var trendItems []*DailyTrendItem
+	for _, item := range dailyTrend {
+		trendItems = append(trendItems, &DailyTrendItem{
+			Date:      item.Date,
+			Created:   item.Created,
+			Completed: item.Completed,
+		})
+	}
+
+	return &TimeStats{
+		CreatedCount:   createdCount,
+		CompletedCount: completedCount,
+		CompletionRate: completionRate,
+		DailyTrend:     trendItems,
+	}, nil
 }
 
 // GetCompletionRate 获取完成率
